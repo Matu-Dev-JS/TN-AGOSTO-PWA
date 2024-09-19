@@ -1,0 +1,3 @@
+[id: 1] [hoy] [ERROR_SUBSCRIPCION_METODO_PAGO] [medoto-pago.js] 
+Message:
+El usuario no se encontro en la base de datos

@@ -24,3 +24,5 @@ db.test.find({
  $eq = Equal (igual a )
 
 db.test.find({ nombre: {$eq: 'Matias Gimenez'} })
+
+db.users.insertMany([{ "username": "Juan", "password": "juanisto1234", "created_at": "new Date()", "active": true }])
