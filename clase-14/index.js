@@ -144,6 +144,72 @@ app.get('/productos', (req, res) => {
 //Responder en caso de que todo este bien con ok: true, status: 201, payload: {message: 'Usuario registrado'}
 
 
+/* 
+{
+    status: 200,
+    ok: true,
+    message: 'consulta exitosa',
+    result:{
+        workspaces: [
+        {},{}
+        ]
+    }
+}
+
+*/
+
+app.post('/register', (req, res) => {
+    //Estado incial de la respuesta
+    const response = {
+        ok: false,
+        status: 0,
+        message: '',
+        payload: {}
+    }
+    const { username, password } = req.body;
+    try {
+
+
+        if(!username.trim()){
+            response.ok = false
+            response.status = 400
+            response.message =  'Error de solicitud'
+            response.payload.detail = 'El username debe ser un string no vacio'
+            //El return lo hago para cortar la funcion
+            return res.json(response)
+        }
+        if(!password.trim()){
+            response.ok = false
+            response.status = 400
+            response.message = 'Error de solicitud'
+            response.payload.detail = 'El password debe ser un string no vacio'
+            return res.json(response)
+        }
+
+        //Si todo sale bien
+        response.status = 200
+        response.ok = true
+        response.message = 'Usuario creado con exito'
+        response.payload = {
+            username,
+            password
+        }
+
+        return res.json(response);
+
+    } catch (error) {
+        console.error(error);
+        response.ok = false
+        response.status = 500
+        response.message = 'Internal server error'
+        response.payload.detail = error.message
+        return res.json(response);
+    }
+});
+
+//Quita los espacios del final y el principio de un array
+//console.log('   asdas  sadsa   '.trim().length)
+
 app.listen(PORT, () => {
     console.log(`El servidor esta funcionando en http://localhost:${PORT}`)
 })
