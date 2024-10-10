@@ -19,6 +19,7 @@ app.get('/ping', (req, res) =>{
 
 app.use('/api/users', userRouter)
 app.use('/api/products', productRouter)
+
 app.listen(PORT, () => {
     console.log(`La aplicacion se esta ejecutando en http://localhost:${PORT}`)
 })
