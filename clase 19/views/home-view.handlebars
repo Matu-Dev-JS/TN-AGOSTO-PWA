@@ -1,0 +1,29 @@
+{{!-- 
+{
+    layout: 'main',
+    status: 200,
+    ok: true,
+    data: {
+        title: 'Ofertas de la semana',
+        products: productos,
+    },
+    helpers: {
+
+    }
+}
+--}}
+<h1>{{this.data.title}}</h1>
+{{#each this.data.products}}
+{{!-- 
+Se crea una especie de ambito donde this pasa a el elemento del array
+ --}}
+    <div>
+        <h2>{{this.nombre}}</h2>
+        <div><b>Precio:</b> ${{this.precio}}</div>
+        <div><b>Quedan:</b> {{this.stock}} unidades disponibles</div>
+        <a href="/product/detail/{{this.id}}" >Ir a detalle</a>
+        <hr>
+    </div>
+{{/each}}
+
+<a href="/product/new">Crear producto</a>
