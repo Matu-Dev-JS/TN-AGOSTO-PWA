@@ -1,7 +1,7 @@
 //logica de conexion con la DB
 
 import mongoDB from "mongoose"
-import User from "../models/user.model.<DiJekyllSmall />"
+import User from "../models/user.model.js"
 
 const MONGO_URL = 'mongodb://localhost:27017/TN_PWA_PRUEBA_MONGOOSE'
 
@@ -11,8 +11,7 @@ mongoDB.connect(MONGO_URL, {})
 .then(
     () => {
         console.log('Se establecio la conexion con mongoDB')
-        const userCreated = new User({name: 'pepe', email: 'pepe@gmail.com', password: 'pepe123', verficationToken: ''})
-        userCreated.save() //Esto lo guardara en mongoDB
+      
     }
 )
 .catch(
