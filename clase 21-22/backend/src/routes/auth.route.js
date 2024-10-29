@@ -6,7 +6,7 @@ const authRouter = express.Router()
 authRouter.post('/register', registerController)
 
 //authRouter.post('/login')
-//authRouter.get('/verify-email')
+authRouter.get('/verify-email/:validation_token')
 
 
 

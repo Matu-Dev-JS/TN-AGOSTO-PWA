@@ -1,7 +1,11 @@
+import ENVIROMENT from "../config/enviroment.js"
 import ResponseBuilder from "../helpers/builders/responseBuilder.js"
+import trasporterEmail from "../helpers/emailTransporter.helpers.js"
 import { verifyEmail, verifyMinLength, verifyString } from "../helpers/validations.helpers.js"
 import User from "../models/user.model.js"
 import bcrypt from 'bcrypt'
+import nodemailer from 'nodemailer'
+import jwt from 'jsonwebtoken'
 
 
 export const registerController = async (req, res) => {
@@ -59,8 +63,33 @@ export const registerController = async (req, res) => {
         }
     
         const hashedPassword = await bcrypt.hash(registerConfig.password.value, 10)
-    
 
+        const validationToken = jwt.sign(
+            {
+                email: registerConfig.email.value
+            },
+            ENVIROMENT.SECRET_KEY,
+            {
+                expiresIn: '1d'
+            }
+        )
+
+        const redirectUrl = `http://localhost:3000/api/auth/verify-email/` + validationToken
+
+        const result = await trasporterEmail.sendMail({
+            subject: 'Valida tu email',
+            to: registerConfig.email.value,
+            html: `
+                <h1>Valida tu mail</h1>
+                <p>Para validar tu mail da click <a href='${redirectUrl}'>aqui</a></p>
+            `
+        })
+
+        
+        
+        console.log({result})
+
+        
         const userCreated = new User({
             name: registerConfig.name.value, 
             email: registerConfig.email.value, 
@@ -69,7 +98,7 @@ export const registerController = async (req, res) => {
         })
         await userCreated.save() //Esto lo guardara en mongoDB
     
-    
+        
         
         
         const response = new ResponseBuilder()
@@ -87,4 +116,4 @@ export const registerController = async (req, res) => {
     }
 }
 
-console.log(bcrypt.compareSync('pePe123456', "$2b$10$3kAs.RkWue6OIGU.gdCJLOeCMBqdD6uOy0eY5H/nHgnHDJTOXBvm2"))
+
