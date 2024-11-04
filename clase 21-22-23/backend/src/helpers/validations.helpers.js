@@ -1,4 +1,4 @@
-const emailRegex = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gim;
+const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
 export const verifyString = (field_name, field_value) => {
     if(!(typeof(field_value) === 'string')){
@@ -34,3 +34,4 @@ export const verifyEmail = (field_name, field_value) => {
         }
     }
 }
+
