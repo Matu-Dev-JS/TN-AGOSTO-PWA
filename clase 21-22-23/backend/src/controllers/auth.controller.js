@@ -149,8 +149,9 @@ export const verifyEmailController = async (req, res) => {
         const user_to_verify = await User.findOne({ email: email_to_verify })
         user_to_verify.emailVerified = true
         await user_to_verify.save()
+        //res.send(`<h1>Email verificado exitosamente, por favor logueate</h1>`)
         res.sendStatus(200)
-        //res.redirect('URL_FRONT')
+        //res.redirect('http://localhost:5173/login')
     }
     catch (error) {
         console.error(error)
@@ -239,3 +240,13 @@ response = {
         }
     }
 } */
+
+const forgotPasswordController = (req, res) => {
+    
+    //Recibir el email del body
+    //Buscar al usuario por email (si no esta devolver 404)
+    //Firmar reset_token con el email dentro
+    //Crear una resetUrl = url_front/resetPassword/$reset_token
+    //Enviar un mail con asunto: recuperar contraseña y un link con el resetUrl
+    //responder con 200
+}
