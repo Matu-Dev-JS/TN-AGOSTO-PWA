@@ -241,8 +241,27 @@ response = {
     }
 } */
 
-const forgotPasswordController = (req, res) => {
-    
+export const forgotPasswordController = async (req, res) => {
+    const { email } = req.body
+
+    const user = await User.findOne({email: email})
+
+    const reset_token = jwt.sign(
+        {email: user.email},
+        ENVIROMENT.SECRET_KEY,
+        { expiresIn: '1d'}
+    )
+
+    const resetUrl = `${ENVIROMENT.FRONTEND_URL}/auth/recovery-password/${reset_token}`
+
+    const result = await trasporterEmail.sendMail({
+        subject: 'Recuperar password',
+        to: user.email,
+        html:`<a href=${resetUrl}> Recuperar </a>`
+    })
+
+
+    res.sendStatus(200)
     //Recibir el email del body
     //Buscar al usuario por email (si no esta devolver 404)
     //Firmar reset_token con el email dentro
@@ -250,3 +269,4 @@ const forgotPasswordController = (req, res) => {
     //Enviar un mail con asunto: recuperar contraseña y un link con el resetUrl
     //responder con 200
 }
+
