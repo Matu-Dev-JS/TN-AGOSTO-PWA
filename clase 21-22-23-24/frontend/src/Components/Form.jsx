@@ -57,7 +57,7 @@ const Field = ({field, handleChange, state_value}) => {
             <>
                 {
                     field.field_component === 'INPUT'
-                    ? <input {...field.field_data_props} onChange={handleChange} value={state_value}/>
+                    ? <input  onChange={handleChange} value={state_value} {...field.field_data_props}/>
                     : <textarea></textarea>
                 }
             </>

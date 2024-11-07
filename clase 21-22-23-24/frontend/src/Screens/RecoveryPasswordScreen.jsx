@@ -6,8 +6,25 @@ import Form from '../Components/Form'
 const RecoveryPasswordScreen = () => {
     const {reset_token} = useParams()
     console.log('Token de reset de contraseña:', reset_token)
-    const actionRecoveryPassword = (form_state) => {
+    const actionRecoveryPassword = async (form_state) => {
         console.log(form_state)
+
+        const response = await fetch(
+            'http://localhost:3000/api/auth/recovery-password/' + reset_token,
+            {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    password: form_state.password
+                })
+            }
+        )
+
+        console.log(response)
+        const data = await response.json()
+        console.log({data})
     }
 
     

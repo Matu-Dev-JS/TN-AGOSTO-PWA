@@ -270,3 +270,17 @@ export const forgotPasswordController = async (req, res) => {
     //responder con 200
 }
 
+
+export const recoveryPasswordController = () => {
+    //Caputurar el reset_token de params
+    //Validar el token y obtienen el email del payload
+    //Buscar en la db al usuario con ese email
+    //Validar que contraseña nueva este
+    //Hashear la password
+
+    //Ejemplo de actualizar con mongoose
+    // const user = await User.findOne({email: email})
+    // user.password = newPassword
+    // user.save()
+    //Responder con status 200
+}
