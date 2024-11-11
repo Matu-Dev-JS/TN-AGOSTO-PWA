@@ -150,8 +150,8 @@ export const verifyEmailController = async (req, res) => {
         user_to_verify.emailVerified = true
         await user_to_verify.save()
         //res.send(`<h1>Email verificado exitosamente, por favor logueate</h1>`)
-        res.sendStatus(200)
-        //res.redirect('http://localhost:5173/login')
+        //res.sendStatus(200)
+        res.redirect('http://localhost:5173/login')
     }
     catch (error) {
         console.error(error)
@@ -243,7 +243,7 @@ response = {
 
 export const forgotPasswordController = async (req, res) => {
     const { email } = req.body
-
+    console.log(req.body)
     const user = await User.findOne({email: email})
 
     const reset_token = jwt.sign(
@@ -260,8 +260,8 @@ export const forgotPasswordController = async (req, res) => {
         html:`<a href=${resetUrl}> Recuperar </a>`
     })
 
-
-    res.sendStatus(200)
+    
+    res.status(200).json( {ok: true})
     //Recibir el email del body
     //Buscar al usuario por email (si no esta devolver 404)
     //Firmar reset_token con el email dentro
@@ -271,7 +271,30 @@ export const forgotPasswordController = async (req, res) => {
 }
 
 
-export const recoveryPasswordController = () => {
+export const recoveryPasswordController = async (req, res) => {
+
+    try{
+        const { form } = req.body
+
+        const {reset_token} = req.params
+        const {email} = jwt.verify(reset_token, ENVIROMENT.SECRET_KEY)
+        const usuarioEncontrado = await User.findOne({
+            email: email
+        })
+        const passwordHash = await bcrypt.hash(form.password,10)
+        usuarioEncontrado.password = passwordHash
+        await usuarioEncontrado.save()
+        const response = new ResponseBuilder()
+        .setCode('PASSWORD_RESET_SUCCESS')
+        .setMessage('El password fue renovado con éxito.')
+        .setOk(true)
+        .setStatus(200)
+        .build()
+        res.json(response)
+    }
+    catch(error){
+        res.json(error)
+    }
     //Caputurar el reset_token de params
     //Validar el token y obtienen el email del payload
     //Buscar en la db al usuario con ese email
@@ -284,3 +307,4 @@ export const recoveryPasswordController = () => {
     // user.save()
     //Responder con status 200
 }
+

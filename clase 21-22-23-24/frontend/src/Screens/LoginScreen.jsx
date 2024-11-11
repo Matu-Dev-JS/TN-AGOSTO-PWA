@@ -1,5 +1,6 @@
 import React from 'react'
 import useForm from '../Hooks/useForm'
+import { Link } from 'react-router-dom'
 
 const LoginScreen = () => {
 	const { formState, handleChange } = useForm({
@@ -8,9 +9,19 @@ const LoginScreen = () => {
 	})
 
 	console.log(formState)
-	const handleLogin = (e) => {
+	const handleLogin = async (e) => {
 		e.preventDefault()
-
+		const responseHTTP = await fetch('http://localhost:3000/api/auth/login',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formState)
+            })
+        console.log(responseHTTP)
+        const data = await responseHTTP.json()
+        console.log(data)
 	}
 	return (
 		<div>

@@ -9,6 +9,7 @@ const Form = ({children, action, form_fields, inital_state_form}) => {
         e.preventDefault()
         action(formState)
     }
+    
 
     return (
         <form onSubmit={handleSubmit}>
@@ -17,7 +18,7 @@ const Form = ({children, action, form_fields, inital_state_form}) => {
             {children}
         </form>
     )
-}
+}   
 
 const FieldList = ({form_fields, handleChange, form_state} ) => {
     return (
