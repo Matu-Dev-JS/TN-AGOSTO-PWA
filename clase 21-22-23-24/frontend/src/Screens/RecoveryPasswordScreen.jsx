@@ -2,22 +2,27 @@ import React from 'react'
 import useForm from '../Hooks/useForm'
 import {  Link, useParams } from 'react-router-dom'
 import Form from '../Components/Form'
+import { jwtDecode } from 'jwt-decode'
 
 const RecoveryPasswordScreen = () => {
+    console.log(useParams())
     const {reset_token} = useParams()
     console.log('Token de reset de contraseña:', reset_token)
+
+    console.log(jwtDecode(reset_token))
     const actionRecoveryPassword = async (form_state) => {
         console.log(form_state)
 
         const response = await fetch(
-            'http://localhost:3000/api/auth/recovery-password/' + reset_token,
+            'http://localhost:3000/api/auth/recovery-password',
             {
                 method: 'PUT',
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    password: form_state.password
+                    password: form_state.password,
+                    reset_token
                 })
             }
         )

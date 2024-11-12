@@ -274,9 +274,9 @@ export const forgotPasswordController = async (req, res) => {
 export const recoveryPasswordController = async (req, res) => {
 
     try{
-        const { form } = req.body
+        const { form, reset_token } = req.body
 
-        const {reset_token} = req.params
+   
         const {email} = jwt.verify(reset_token, ENVIROMENT.SECRET_KEY)
         const usuarioEncontrado = await User.findOne({
             email: email

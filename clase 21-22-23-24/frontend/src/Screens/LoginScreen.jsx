@@ -1,13 +1,13 @@
 import React from 'react'
 import useForm from '../Hooks/useForm'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const LoginScreen = () => {
 	const { formState, handleChange } = useForm({
 		email: '',
 		password: ''
 	})
-
+	const navigate  = useNavigate()
 	console.log(formState)
 	const handleLogin = async (e) => {
 		e.preventDefault()
@@ -21,6 +21,13 @@ const LoginScreen = () => {
             })
         console.log(responseHTTP)
         const data = await responseHTTP.json()
+		if(!data.ok){
+			//Manejaran los estados de error
+		}
+		else{
+			sessionStorage.setItem('access-token', data.data.access_token)
+			navigate('/home')
+		}
         console.log(data)
 	}
 	return (
