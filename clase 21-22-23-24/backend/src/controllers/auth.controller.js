@@ -186,7 +186,8 @@ export const loginController = async (req, res) => {
             {
                 user_id: user._id,
                 name: user.name,
-                email: user.email
+                email: user.email, 
+                role: user.role
             },
             ENVIROMENT.SECRET_KEY,
             {
