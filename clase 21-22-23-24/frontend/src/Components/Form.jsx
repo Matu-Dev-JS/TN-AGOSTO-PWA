@@ -68,5 +68,18 @@ const Field = ({field, handleChange, state_value}) => {
 
 
 
+/* const InputSelected = ({type}) =>{
+    const INPUTS = {
+        "INPUT": <input/>,
+        "TEXTAREA": <textarea/>
+    }
+    return INPUTS[type]
+}
+
+
+<InputSelected type={"INPUT"} /> */
+
+
+
 
 export default Form
