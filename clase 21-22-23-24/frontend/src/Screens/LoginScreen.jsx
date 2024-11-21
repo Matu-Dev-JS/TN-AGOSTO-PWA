@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import useForm from '../Hooks/useForm'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -25,13 +25,19 @@ const LoginScreen = () => {
 			//Manejaran los estados de error
 		}
 		else{
+			//Nos guardamos el token de acceso en el session storage
 			sessionStorage.setItem('access-token', data.data.access_token)
 			navigate('/home')
 		}
         console.log(data)
 	}
+
+
+
+	
 	return (
 		<div>
+
 			<h1>Inicia sesion </h1>
 			<form onSubmit={handleLogin}>
 				<div>

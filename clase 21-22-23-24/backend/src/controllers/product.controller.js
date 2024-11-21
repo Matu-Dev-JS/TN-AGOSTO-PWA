@@ -69,7 +69,13 @@ export const deleteProductController = async (req, res) => {
     
             const product = await ProductRepository.getProductById(product_id)
             if (product) {
-                res.status(200).json(product)
+                res.status(200).json({
+                    ok:true,
+                    message:'Producto obtenido',
+                    payload: {
+                        product: product
+                    }
+                })
             } else {
                 //Yo puedo pasar a next el parametro para x middleware
                 return next(new AppError('Producto no encontrado', 404))
@@ -83,9 +89,18 @@ export const deleteProductController = async (req, res) => {
     export const getAllProductController = async (req, res) => {
         try {
             const products = await ProductRepository.getAllProducts()
-            res.status(200).json('productos:' + products)
+            res.status(200).json({
+                ok: true,
+                payload: {
+                    products
+                }
+            })
         } catch (error) {
             console.error(error)
-            res.status(500).json({ message: "Hubo un error al obtener los productos!!" })
+            res.status(500).json({
+                ok: false,
+                message: "Hubo un error al obtener los productos!!", 
+                error: "Hubo un error al obtener los productos!!"
+            })
         }
     }
