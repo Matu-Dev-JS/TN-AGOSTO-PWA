@@ -5,8 +5,10 @@ import RecoveryPasswordScreen from "./Screens/RecoveryPasswordScreen"
 import ForgotPasswordScreen from "./Screens/ForgotPasswordScreen"
 import HomeScreen from "./Screens/HomeScreen"
 import ProductDetailScreen from "./Screens/ProductDetailScreen"
+import ProtectedRoute from "./Components/ProtectedRoute"
 
 const App = () => {
+	console.log(import.meta.env)
 	return (
 		<div>
 			<Routes>
@@ -15,8 +17,14 @@ const App = () => {
 				<Route path="/register" element={<RegisterScreen/>}/>
 				<Route path="/forgot-password" element={<ForgotPasswordScreen/>}/>
 				<Route path="/auth/recovery-password/:reset_token" element={<RecoveryPasswordScreen/>} />
-				<Route path="/home" element={<HomeScreen/>}/>
-				<Route path="/product/:product_id" element={<ProductDetailScreen/>}/>
+				<Route element={<ProtectedRoute/>}>
+					<Route path="/home" element={<HomeScreen/>}/>
+					
+					<Route path="/product/:product_id" element={<ProductDetailScreen/>}/>
+				</Route>
+					
+
+				
 			</Routes>
 		</div>
 	)
